@@ -5,6 +5,7 @@
 void patientManager();
 void addPatient();
 void viewPatients();
+void searchPatient();
 
 int main() {
 
@@ -20,6 +21,9 @@ int main() {
         case 1: 
             patientManager();
         break;
+        default:
+            std::cout << "Please enter a valid choice. \n";
+        break;
     }
 }
 
@@ -29,6 +33,7 @@ void patientManager() {
 
     std::cout << "1. Add Patient\n";
     std::cout << "2. View All Patients\n";
+    std::cout << "3. Search Patient\n";
     std::cout << "Please enter a choice: ";
     std::cin >> choice;
 
@@ -38,8 +43,12 @@ void patientManager() {
             break;
         case 2: 
             viewPatients();
+        case 3:
+            searchPatient();
+        break;
         default:
         std::cout << "Please enter a valid choice: ";
+        break;
     } 
 }
 
@@ -79,6 +88,7 @@ void addPatient() {
     file << "Address: " << address << "\n";
     file << "Phone number: " << phoneNumber << "\n";
     file << "Gender: " << gender << "\n";
+    file.close();
 }
 
 void viewPatients() {
@@ -93,6 +103,47 @@ void viewPatients() {
 
 }
 
+void searchPatient() {
 
+    std::string firstName;                                             
+    std::string lastName;
+
+    std::cout << "Please enter the first name of the patient: ";
+    std::cin >> firstName;
+
+    std::cout << "Please enter the last name of the patient: ";
+    std::cin >> lastName;
+
+    std::ifstream file("patient.txt");
+    if (!file.is_open()) {
+        std::cout << "Error: Could not open file";
+    }
+
+    std::string line;
+    bool found = false;
+
+    while (getline(file, line)) {
+        if (line == "First Name: " + firstName) {
+            getline(file, line);
+            if (line == "Last Name: " + lastName) {
+                found = true;
+                std::cout << "First Name: " << firstName << "\n";
+                std::cout << line << "\n"; 
+                for (int i = 0; i < 4; ++i) {
+                    getline(file, line);
+                    std::cout << line << "\n";
+                }
+                break;
+            }
+        }
+    }
+    if (!found) {
+        std::cout << "Patient " << firstName << " " << lastName << " not found.\n";
+    }
+
+    file.close();
+
+
+}
 
 
