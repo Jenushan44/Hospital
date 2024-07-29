@@ -31,7 +31,6 @@ int main() {
             break;
         }
     } while (choice != 2);
-    
 }
 
 void patientManager() {
@@ -156,7 +155,53 @@ void searchPatient() {
 
 void removePatient() {
 
+    std::string healthCard;
 
+    std::cout << "Please enter your Health Card Number: ";
+    std::cin >> healthCard;
+
+    std::ifstream file("patient.txt");
+    if (!file.is_open()) {
+        std::cout << "Error: Could not open file";
+    }
+
+    std::ofstream tempFile("temp.txt");
+    if (!tempFile.is_open()) {
+        std::cout << "Error: could not open file";
+    }
+
+    std::string line;
+    bool found = false;
+    bool skip = false;
+
+    while (getline(file, line)) {
+        if (line == "Health Card Number: " + healthCard) {
+            skip = true;
+            for (int i = 0; i < 5; i++) {
+                getline(file, line);
+            }
+            found = true;
+        } else {
+            if (!skip) {
+                tempFile << line << "\n";
+            } else {
+                skip = false;
+                tempFile << line << "\n";
+            }
+        }
+    }
+
+    if (!found) {
+        std::cout << "Patient not found";
+    } else {
+        std::cout << "Patient removed successfully";
+    }
+
+    file.close();
+    tempFile.close();
+
+    std::remove("patient.txt");
+    std::rename("temp.txt", "patient.txt");
 
 }
 
