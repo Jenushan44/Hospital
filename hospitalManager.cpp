@@ -6,25 +6,32 @@ void patientManager();
 void addPatient();
 void viewPatients();
 void searchPatient();
+void removePatient();
 
 int main() {
 
     int choice;
 
     std::cout << "Welcome to the Hospital Management system\n";
-    std::cout << "Please select what you would like to do: \n";
     
-    std::cout << "1. Patient Manager\n";
-    std::cin >> choice;
+    do {
+        std::cout << "Please select what you would like to do: \n";
+        std::cout << "1. Patient Manager\n";
+        std::cin >> choice;
 
-    switch(choice) {
-        case 1: 
-            patientManager();
-        break;
-        default:
-            std::cout << "Please enter a valid choice. \n";
-        break;
-    }
+        switch(choice) {
+            case 1: 
+                patientManager();
+            break;
+            case 2:
+                std::cout << "Thank your for using hospital manager";
+            break;
+            default:
+                std::cout << "Please enter a valid choice. \n";
+            break;
+        }
+    } while (choice != 2);
+    
 }
 
 void patientManager() {
@@ -34,17 +41,22 @@ void patientManager() {
     std::cout << "1. Add Patient\n";
     std::cout << "2. View All Patients\n";
     std::cout << "3. Search Patient\n";
+    std::cout << "4. Remove Patient\n";
     std::cout << "Please enter a choice: ";
     std::cin >> choice;
 
     switch(choice) {
         case 1: 
             addPatient();
+            std::cout << "Patient Added";
             break;
         case 2: 
             viewPatients();
         case 3:
             searchPatient();
+        break;
+        case 4:
+            removePatient();
         break;
         default:
         std::cout << "Please enter a valid choice: ";
@@ -134,7 +146,6 @@ void searchPatient() {
                     std::cout << line << "\n";
                 }
                 break;
-            
         }
     }
     if (!found) {
@@ -143,4 +154,9 @@ void searchPatient() {
     file.close();
 }
 
+void removePatient() {
+
+
+
+}
 
