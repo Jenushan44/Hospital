@@ -10,6 +10,7 @@ void removePatient();
 void doctorManager();
 void addDoctor();
 void viewDoctors();
+void searchDoctor();
 
 int main() {
 
@@ -232,7 +233,7 @@ void doctorManager() {
             viewDoctors();
             break;
         case 3:
-            std::cout << "search";
+            searchDoctor();
             break;
         case 4: 
             std::cout << "remove";
@@ -242,12 +243,16 @@ void doctorManager() {
 
 void addDoctor() {
 
+    std::string idNumber;
     std::string firstName;
     std::string lastName;
     std::string birthday;
     std::string address;
     std::string phoneNumber;
     std::string gender;
+
+    std::cout << "Please enter you medical identification number: ";
+    std::cin >> idNumber;
 
     std::cout << "Please enter the doctor's first name: ";
     std::cin >> firstName;
@@ -270,12 +275,14 @@ void addDoctor() {
 
     std::ofstream file;
     file.open("doctor.txt", std::ios::app);
+    file << "Medical Identification Number: " << idNumber << "\n";
     file << "First Name: " << firstName << "\n";
     file << "Last Name: " << lastName << "\n";
     file << "Birthday: " << birthday << "\n";
     file << "Address: " << address << "\n";
     file << "Phone number: " << phoneNumber << "\n";
     file << "Gender: " << gender << "\n";
+    file << "\n";
     file.close();
 }
 
@@ -288,4 +295,41 @@ void viewDoctors() {
         std::cout << line << "\n";
     }
     file.close();
+}
+
+void searchDoctor() {
+
+    std::string idNumber;
+
+    std::cout << "Please enter the doctor's medical identification number: ";
+    std::cin >> idNumber;
+
+    std::ifstream file("doctor.txt");
+    if (!file.is_open()) {
+        std::cout << "Error: Could not open file";
+    }
+
+    std::string line;
+    bool found = false;
+
+    while (getline(file, line)) {
+        if (line == "Medical Identification Number: " +  idNumber) {
+            getline(file, line);
+            found = true;
+            std::cout << "Medical Identificaiton Number: " << idNumber << "\n";
+            std::cout << line << "\n";
+            for (int i = 0; i < 5; i++) {
+                getline(file, line);
+                std::cout << line << "\n";
+            }
+            break;
+        }
+        std::cout << "Doctor not found";
+
+    }
+    if (!found) {
+        std::cout << "Doctor not found";
+    }
+    file.close();
+
 }
