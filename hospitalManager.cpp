@@ -2,9 +2,6 @@
 #include <fstream>
 #include <string>
 
-void personDetails();
-void printDetails();
-
 class Person {
 public:
     std::string firstName;
@@ -46,7 +43,7 @@ public:
 
 };
 
-class Patient : public Person{
+class Patient : public Person {
 
 public:
     std::string healthNumber;
@@ -57,7 +54,7 @@ public:
         std::cin >> healthNumber;
     }
 
-    void addToFile() {
+    void addPatient() {
         std::ofstream file("patient.txt", std::ios::app);
         file << "Health Card Number: " << healthNumber << "\n";
         file << "First name: " << firstName << "\n";
@@ -69,6 +66,20 @@ public:
         file.close();
         std::cout << "Patient details saved";
     }
+
+    void viewPatient() {
+        std::string line;
+        std::ifstream file("patient.txt");
+        if (!file.is_open()) {
+            std::cout << "File not found";
+        }
+        
+        while(getline(file, line)) {
+            std::cout << line << "\n";
+        }
+        file.close();
+    }
+
 };
 
 int main() {
@@ -82,7 +93,9 @@ int main() {
     do {    
         std::cout << "1. Patient Details\n";
         std::cout << "2. Add Patient\n";
-        std::cout << "3. Exit";
+        std::cout << "3. View Patients\n";
+        std::cout << "4. Exit\n";
+        std::cout << "Please enter your choice: ";
         std::cin >> choice;
 
         switch (choice) {
@@ -91,15 +104,18 @@ int main() {
                 break;
             case 2: 
                 p.personDetails();
-                p.addToFile();
+                p.addPatient();
                 break;
             case 3:
+                p.viewPatient();
+                break;
+            case 4:
                 std::cout << "Thank you for using the hospital manager";
                 break;
             default:
                 std::cout << "Please enter a valid choice";
                 break;
         }
-    } while (choice != 3);
+    } while (choice != 4);
 }
 
