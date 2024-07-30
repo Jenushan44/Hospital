@@ -9,6 +9,7 @@ void searchPatient();
 void removePatient();
 void doctorManager();
 void addDoctor();
+void viewDoctors();
 
 int main() {
 
@@ -228,7 +229,7 @@ void doctorManager() {
             addDoctor();
             break;
         case 2: 
-            std::cout << "view";
+            viewDoctors();
             break;
         case 3:
             std::cout << "search";
@@ -256,9 +257,10 @@ void addDoctor() {
 
     std::cout << "Please enter the doctor's date of birth (DD/MM/YYYY): ";
     std::cin >> birthday;
+    std::cin.ignore();
 
     std::cout << "Please enter the doctor's address: ";
-    std::cin >> address;
+    std::getline(std::cin, address);
 
     std::cout << "Please enter the doctor's phone number: ";
     std::cin >> phoneNumber;
@@ -274,5 +276,16 @@ void addDoctor() {
     file << "Address: " << address << "\n";
     file << "Phone number: " << phoneNumber << "\n";
     file << "Gender: " << gender << "\n";
+    file.close();
+}
+
+void viewDoctors() {
+
+    std::ifstream file("doctor.txt");
+    std::string line;
+    
+    while (getline(file, line)) {
+        std::cout << line << "\n";
+    }
     file.close();
 }
