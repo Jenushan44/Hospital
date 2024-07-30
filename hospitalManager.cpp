@@ -7,6 +7,8 @@ void addPatient();
 void viewPatients();
 void searchPatient();
 void removePatient();
+void editPatient();
+void doctorManager();
 
 int main() {
 
@@ -17,20 +19,25 @@ int main() {
     do {
         std::cout << "Please select what you would like to do: \n";
         std::cout << "1. Patient Manager\n";
+        std::cout << "2. Doctor Manager\n";
+        std::cout << "Please enter a choice: ";
         std::cin >> choice;
 
         switch(choice) {
             case 1: 
                 patientManager();
-            break;
+                break;
             case 2:
+                doctorManager();
+                break;
+            case 3:
                 std::cout << "Thank your for using hospital manager";
-            break;
+                break;
             default:
                 std::cout << "Please enter a valid choice. \n";
             break;
         }
-    } while (choice != 2);
+    } while (choice != 3);
 }
 
 void patientManager() {
@@ -47,7 +54,7 @@ void patientManager() {
     switch(choice) {
         case 1: 
             addPatient();
-            std::cout << "Patient Added";
+            std::cout << "Patient Added\n";
             break;
         case 2: 
             viewPatients();
@@ -57,6 +64,8 @@ void patientManager() {
         case 4:
             removePatient();
         break;
+        case 5: 
+            editPatient();
         default:
         std::cout << "Please enter a valid choice: ";
         break;
@@ -177,7 +186,7 @@ void removePatient() {
     while (getline(file, line)) {
         if (line == "Health Card Number: " + healthCard) {
             skip = true;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
                 getline(file, line);
             }
             found = true;
@@ -202,6 +211,30 @@ void removePatient() {
 
     std::remove("patient.txt");
     std::rename("temp.txt", "patient.txt");
+}
 
+void doctorManager() {
+
+    int choice;
+
+    std::cout << "1. Add Doctor\n";
+    std::cout << "2. View All Doctors\n";
+    std::cout << "3. Search Doctor\n";
+    std::cout << "4. Remove Doctor\n";
+
+    switch (choice) {
+        case 1: 
+            std::cout << "add";
+            break;
+        case 2: 
+            std::cout << "view";
+            break;
+        case 3:
+            std::cout << "search";
+            break;
+        case 4: 
+            std::cout << "remove";
+            break;
+    }
 }
 
