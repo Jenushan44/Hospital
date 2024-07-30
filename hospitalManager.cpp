@@ -7,8 +7,8 @@ void addPatient();
 void viewPatients();
 void searchPatient();
 void removePatient();
-void editPatient();
 void doctorManager();
+void addDoctor();
 
 int main() {
 
@@ -65,7 +65,7 @@ void patientManager() {
             removePatient();
         break;
         case 5: 
-            editPatient();
+            std::cout << "edit";
         default:
         std::cout << "Please enter a valid choice: ";
         break;
@@ -221,10 +221,11 @@ void doctorManager() {
     std::cout << "2. View All Doctors\n";
     std::cout << "3. Search Doctor\n";
     std::cout << "4. Remove Doctor\n";
+    std::cin >> choice;
 
     switch (choice) {
         case 1: 
-            std::cout << "add";
+            addDoctor();
             break;
         case 2: 
             std::cout << "view";
@@ -238,3 +239,40 @@ void doctorManager() {
     }
 }
 
+void addDoctor() {
+
+    std::string firstName;
+    std::string lastName;
+    std::string birthday;
+    std::string address;
+    std::string phoneNumber;
+    std::string gender;
+
+    std::cout << "Please enter the doctor's first name: ";
+    std::cin >> firstName;
+
+    std::cout << "Please enter the doctor's last name: ";
+    std::cin >> lastName;
+
+    std::cout << "Please enter the doctor's date of birth (DD/MM/YYYY): ";
+    std::cin >> birthday;
+
+    std::cout << "Please enter the doctor's address: ";
+    std::cin >> address;
+
+    std::cout << "Please enter the doctor's phone number: ";
+    std::cin >> phoneNumber;
+
+    std::cout << "Please enter the doctor's gender: ";
+    std::cin >> gender;
+
+    std::ofstream file;
+    file.open("doctor.txt", std::ios::app);
+    file << "First Name: " << firstName << "\n";
+    file << "Last Name: " << lastName << "\n";
+    file << "Birthday: " << birthday << "\n";
+    file << "Address: " << address << "\n";
+    file << "Phone number: " << phoneNumber << "\n";
+    file << "Gender: " << gender << "\n";
+    file.close();
+}
