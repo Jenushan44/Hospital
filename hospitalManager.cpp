@@ -43,6 +43,50 @@ int main() {
     } while (choice != 3);
 }
 
+class Person {
+public:
+    std::string firstName;
+    std::string lastName;
+    std::string birthday;
+    std::string address;
+    std::string phoneNumber;
+    std::string gender;
+
+    void personDetails() {
+        std::cout << "Please enter first name: \n";
+        std::cin >> firstName;
+
+        std::cout << "Please enter last name: \n";
+        std::cin >> lastName;
+
+        std::cout << "Please enter date of birth (DD/MM/YYYY): \n";
+        std::cin >> birthday;
+
+        std::cout << "Please enter the address: \n";
+        std::getline(std::cin, address);
+
+        std::cout << "Please enter the phone number: \n";
+        std::cin >> phoneNumber;
+
+        std::cout << "Please enter the gender: \n";
+        std::cin >> gender;
+    }
+
+    void printDetails() {
+        std::cout << "First name: " << firstName;
+        std::cout << "Last name: " << lastName;
+        std::cout << "Birthday: " << birthday;
+        std::cout << "Address: " << address;
+        std::cout << "Phone Number: " << phoneNumber;
+        std::cout << "Gender: " << gender;
+    }
+
+}
+
+
+
+
+
 void patientManager() {
 
     int choice;
