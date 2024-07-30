@@ -40,23 +40,22 @@ public:
         std::cout << "Phone Number: " << phoneNumber << "\n";
         std::cout << "Gender: " << gender << "\n";
     }
-
 };
 
 class Patient : public Person {
 
 public:
-    std::string healthNumber;
+    std::string healthCard;
     
     void personDetails() {
         Person::personDetails();
         std::cout << "Please enter your health card number: ";
-        std::cin >> healthNumber;
+        std::cin >> healthCard;
     }
 
     void addPatient() {
         std::ofstream file("patient.txt", std::ios::app);
-        file << "Health Card Number: " << healthNumber << "\n";
+        file << "Health Card Number: " << healthCard << "\n";
         file << "First name: " << firstName << "\n";
         file << "Last name: " << lastName << "\n";
         file << "Birthday: " << birthday << "\n";
@@ -72,14 +71,43 @@ public:
         std::ifstream file("patient.txt");
         if (!file.is_open()) {
             std::cout << "File not found";
-        }
-        
+        }   
         while(getline(file, line)) {
             std::cout << line << "\n";
         }
         file.close();
     }
 
+    void searchPatient() {
+        std::string healthCard;
+        std::string line;
+        bool found = false;
+
+        std::cout << "Please enter the health card number: ";
+        std::cin >> healthCard;
+
+        std::ifstream file("patient.txt");
+        if (!file.is_open()) {
+            std::cout << "File not found";
+        }
+        while (getline(file, line)) {
+            if (line == "Health Card Number: " + healthCard) {
+                getline(file, line);
+                found = true;
+                std::cout << "Health Card Number: " << healthCard << "\n";
+                std::cout << line << "\n";
+                for (int i = 0; i < 5; i++) {
+                    getline(file, line);
+                    std::cout << line << "\n";
+                }
+                break;
+            }
+        }
+        if (!found) {
+            std::cout << "Patient not found";
+        }
+        file.close();
+    }
 };
 
 int main() {
@@ -94,7 +122,8 @@ int main() {
         std::cout << "1. Patient Details\n";
         std::cout << "2. Add Patient\n";
         std::cout << "3. View Patients\n";
-        std::cout << "4. Exit\n";
+        std::cout << "4. Search Patient\n";
+        std::cout << "5. Exit\n";
         std::cout << "Please enter your choice: ";
         std::cin >> choice;
 
@@ -110,12 +139,15 @@ int main() {
                 p.viewPatient();
                 break;
             case 4:
+                p.searchPatient();
+                break;
+            case 5:
                 std::cout << "Thank you for using the hospital manager";
                 break;
             default:
                 std::cout << "Please enter a valid choice";
                 break;
         }
-    } while (choice != 4);
-}
+    } while (choice != 5);
 
+}
