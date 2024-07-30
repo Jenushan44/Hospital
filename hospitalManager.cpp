@@ -2,6 +2,10 @@
 #include <fstream>
 #include <string>
 
+void personDetails();
+void printDetails();
+
+/*
 void patientManager();
 void addPatient();
 void viewPatients();
@@ -28,10 +32,10 @@ int main() {
 
         switch(choice) {
             case 1: 
-                patientManager();
+                //patientManager();
                 break;
             case 2:
-                doctorManager();
+                //doctorManager();
                 break;
             case 3:
                 std::cout << "Thank your for using hospital manager";
@@ -42,6 +46,7 @@ int main() {
         }
     } while (choice != 3);
 }
+*/
 
 class Person {
 public:
@@ -61,6 +66,7 @@ public:
 
         std::cout << "Please enter date of birth (DD/MM/YYYY): \n";
         std::cin >> birthday;
+        std::cin.ignore();
 
         std::cout << "Please enter the address: \n";
         std::getline(std::cin, address);
@@ -73,19 +79,53 @@ public:
     }
 
     void printDetails() {
-        std::cout << "First name: " << firstName;
-        std::cout << "Last name: " << lastName;
-        std::cout << "Birthday: " << birthday;
-        std::cout << "Address: " << address;
-        std::cout << "Phone Number: " << phoneNumber;
-        std::cout << "Gender: " << gender;
+        std::cout << "First name: " << firstName << "\n";
+        std::cout << "Last name: " << lastName << "\n";
+        std::cout << "Birthday: " << birthday << "\n";
+        std::cout << "Address: " << address << "\n";
+        std::cout << "Phone Number: " << phoneNumber << "\n";
+        std::cout << "Gender: " << gender << "\n";
     }
+
+};
+
+class Patient : public Person{
+
+public:
+    std::string healthNumber;
+    
+    void personDetails() {
+        Person::personDetails();
+        std::cout << "Please enter your health card number: ";
+        std::cin >> healthNumber;
+    }
+
+    void addToFile() {
+        std::ofstream file("patient.txt", std::ios::app);
+        file << "Health Card Number: " << healthNumber << "\n";
+        file << "First name: " << firstName << "\n";
+        file << "Last name: " << lastName << "\n";
+        file << "Birthday: " << birthday << "\n";
+        file << "Address: " << address << "\n";
+        file << "Phone Number: " << phoneNumber << "\n";
+        file << "Gender: " << gender << "\n";
+        file.close();
+        std::cout << "Patient details saved";
+    }
+
+};
+
+int main() {
+
+    Patient p;
+    p.personDetails();
+    p.printDetails();
+    p.addToFile();
+    return 0;
 
 }
 
-
-
-
+/*
 
 void patientManager() {
 
@@ -419,3 +459,4 @@ void removeDoctor() {
     std::rename("dtemp.txt", "doctor.txt");
 
 }
+*/
