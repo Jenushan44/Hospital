@@ -11,6 +11,7 @@ void doctorManager();
 void addDoctor();
 void viewDoctors();
 void searchDoctor();
+void removeDoctor();
 
 int main() {
 
@@ -236,7 +237,7 @@ void doctorManager() {
             searchDoctor();
             break;
         case 4: 
-            std::cout << "remove";
+            removeDoctor();
             break;
     }
 }
@@ -331,5 +332,46 @@ void searchDoctor() {
         std::cout << "Doctor not found";
     }
     file.close();
+
+}
+
+void removeDoctor() {
+
+    std::string idNumber;
+    std::string line;
+    bool found = false;
+    bool skip = false;
+
+    std::cout << "Please enter the doctor's Medical Identification Number: ";
+    std::cin >> idNumber;
+
+    std::ofstream tempFile("dtemp.txt");
+
+    std::ifstream file("doctor.txt");
+    while (getline(file, line)) {
+        if (line == "Medical Identification Number: " + idNumber) {
+            skip = true;
+            for (int i = 0; i < 6; i++) {
+                getline(file, line);
+            }
+            found = true;
+        } else {
+            if (!skip) {
+                tempFile << line << "\n";
+            }
+        }
+    }
+
+    if (!found) {
+        std::cout << "Doctor not found";
+    } else {
+        std::cout << "Doctor removed successfully";
+    }
+
+    file.close();
+    tempFile.close();
+
+    std::remove("doctor.txt");
+    std::rename("dtemp.txt", "doctor.txt");
 
 }
