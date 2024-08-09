@@ -134,8 +134,34 @@ public:
         file.close();
     }
 
-};
+    void searchDoctor() {
+        std::string line;
+        std::string doctorID;
+        bool found = false;
 
+        std::cout << "Please enter the Doctor's Id: ";
+        std::cin >> doctorID;
+
+        std::ifstream file("doctor.txt");
+
+        if (!file.is_open()) {
+            std::cout << "File not found\n";
+        }
+        while(getline(file,line)) {
+            if (line == "Doctor ID: " + doctorID) {
+                getline(file, line);
+                found = true;
+                std::cout << "Doctor ID: " << doctorID;
+                for (int i = 0; i < 5; i++) {
+                    getline(file, line);
+                    std::cout << line << "\n";
+                }
+                break;
+            }
+            std::cout << "Doctor not found\n";
+        }   
+    }
+};
 
 int main() {
 
@@ -144,7 +170,8 @@ int main() {
     std::cout << "Welcome to the Hospital Manager\n";
     
     Patient p;
-    
+    Doctor d;
+
     do {    
         std::cout << "1. Patient Details\n";
         std::cout << "2. Add Patient\n";
