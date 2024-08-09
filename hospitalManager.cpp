@@ -46,12 +46,6 @@ class Patient : public Person {
 
 public:
     std::string healthCard;
-    
-    void personDetails() {
-        Person::personDetails();
-        std::cout << "Please enter your health card number: ";
-        std::cin >> healthCard;
-    }
 
     void addPatient() {
         std::ofstream file("patient.txt", std::ios::app);
@@ -63,7 +57,7 @@ public:
         file << "Phone Number: " << phoneNumber << "\n";
         file << "Gender: " << gender << "\n";
         file.close();
-        std::cout << "Patient details saved";
+        std::cout << "Patient details saved\n";
     }
 
     void viewPatient() {
@@ -104,11 +98,44 @@ public:
             }
         }
         if (!found) {
-            std::cout << "Patient not found";
+            std::cout << "Patient not found\n";
         }
         file.close();
     }
 };
+
+class Doctor: public Person {
+
+public:
+    std::string doctorID;
+
+    void addDoctor() {
+        std::ofstream file("doctor.txt", std::ios::app);
+        file << "Doctor Id: " << doctorID << "\n";
+        file << "First Name: " << firstName << "\n";
+        file << "Last Name: " << lastName << "\n";
+        file << "Birthday: " << birthday << "\n";
+        file << "Address: " << address << "\n";
+        file << "Phone number: " << phoneNumber << "\n";
+        file << "Gender: " << gender << "\n";
+        file.close();
+        std::cout << "Doctor details saved\n";
+    }
+
+    void viewDoctor() {
+        std::string line;
+        std::ifstream file("doctor.txt");
+        if (!file.is_open()) {
+            std::cout << "File not found\n";
+        }
+        while(getline(file, line)) {
+            std::cout << line << "\n";
+        }
+        file.close();
+    }
+
+};
+
 
 int main() {
 
@@ -149,5 +176,4 @@ int main() {
                 break;
         }
     } while (choice != 5);
-
 }
