@@ -47,6 +47,12 @@ class Patient : public Person {
 public:
     std::string healthCard;
 
+    void identification() {
+        Person::personDetails();
+        std::cout << "Please enter your health card number: ";
+        std::cin >> healthCard;
+    }
+
     void addPatient() {
         std::ofstream file("patient.txt", std::ios::app);
         file << "Health Card Number: " << healthCard << "\n";
@@ -104,10 +110,16 @@ public:
     }
 };
 
-class Doctor: public Person {
+class Doctor : public Person {
 
 public:
     std::string doctorID;
+
+    void identification() {
+        Doctor::personDetails();
+        std::cout << "Please enter your Doctor Id number: ";
+        std::cin >> doctorID;
+    }
 
     void addDoctor() {
         std::ofstream file("doctor.txt", std::ios::app);
@@ -148,7 +160,7 @@ public:
             std::cout << "File not found\n";
         }
         while(getline(file,line)) {
-            if (line == "Doctor ID: " + doctorID) {
+            if (line == "Doctor Id: " + doctorID) {
                 getline(file, line);
                 found = true;
                 std::cout << "Doctor ID: " << doctorID;
@@ -158,49 +170,59 @@ public:
                 }
                 break;
             }
-            std::cout << "Doctor not found\n";
-        }   
+        }  
+        if (!found) {
+            std::cout << "Doctor not found";
+        } 
     }
 };
 
 int main() {
 
     int choice;
-
     std::cout << "Welcome to the Hospital Manager\n";
     
     Patient p;
     Doctor d;
 
     do {    
-        std::cout << "1. Patient Details\n";
-        std::cout << "2. Add Patient\n";
-        std::cout << "3. View Patients\n";
-        std::cout << "4. Search Patient\n";
-        std::cout << "5. Exit\n";
+        std::cout << "1. Add Patient\n";
+        std::cout << "2. View Patients\n";
+        std::cout << "3. Search Patient\n";
+        std::cout << "4. Add Doctor\n";
+        std::cout << "5. View Doctor\n";
+        std::cout << "6. Seach Doctor\n";
+        std::cout << "7. Exit\n";
         std::cout << "Please enter your choice: ";
         std::cin >> choice;
 
         switch (choice) {
             case 1: 
-                p.printDetails();
-                break;
-            case 2: 
-                p.personDetails();
+                p.identification();
                 p.addPatient();
                 break;
-            case 3:
+            case 2:
                 p.viewPatient();
                 break;
-            case 4:
+            case 3:
                 p.searchPatient();
                 break;
+            case 4:
+                d.identification();
+                d.addDoctor();
+                break;
             case 5:
+                d.viewDoctor();
+                break;
+            case 6:
+                d.searchDoctor();
+                break;
+            case 7:
                 std::cout << "Thank you for using the hospital manager";
                 break;
             default:
                 std::cout << "Please enter a valid choice";
                 break;
         }
-    } while (choice != 5);
+    } while (choice != 7);
 }
