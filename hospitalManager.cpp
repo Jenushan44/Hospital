@@ -40,6 +40,18 @@ public:
         std::cout << "Phone Number: " << phoneNumber << "\n";
         std::cout << "Gender: " << gender << "\n";
     }
+
+    void viewPerson(std::string fileName) {
+        std::string line;
+        std::ifstream file(fileName);
+        if (!file.is_open()) {
+            std::cout << "File not found";
+        }   
+        while(getline(file, line)) {
+            std::cout << line << "\n";
+        }
+        file.close();
+    }
 };
 
 class Patient : public Person {
@@ -67,15 +79,8 @@ public:
     }
 
     void viewPatient() {
-        std::string line;
-        std::ifstream file("patient.txt");
-        if (!file.is_open()) {
-            std::cout << "File not found";
-        }   
-        while(getline(file, line)) {
-            std::cout << line << "\n";
-        }
-        file.close();
+        viewPerson("patient.txt");
+        
     }
 
     void searchPatient() {
@@ -135,15 +140,7 @@ public:
     }
 
     void viewDoctor() {
-        std::string line;
-        std::ifstream file("doctor.txt");
-        if (!file.is_open()) {
-            std::cout << "File not found\n";
-        }
-        while(getline(file, line)) {
-            std::cout << line << "\n";
-        }
-        file.close();
+        viewPerson("doctor.txt");
     }
 
     void searchDoctor() {
