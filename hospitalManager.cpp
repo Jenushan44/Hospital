@@ -52,6 +52,7 @@ public:
         }
         file.close();
     }
+
 };
 
 class Patient : public Person {
@@ -112,6 +113,10 @@ public:
             std::cout << "Patient not found\n";
         }
         file.close();
+    }
+
+    void editPatient() {
+       // editDetails("patient.txt");
     }
 };
 
@@ -174,6 +179,38 @@ public:
     }
 };
 
+class Room {
+    public: 
+        int roomNumber;
+        std::string roomType;
+        bool isAvailable;
+
+        void printDetails() {
+            std::cout << "Room Number: " << roomNumber << "\n";
+            std::cout << "Room Type: " << roomType << "\n";
+            std::cout << "Room Availability: " << isAvailable << "\n";
+        }
+
+        void assignRoom() {
+            if (isAvailable) {
+                isAvailable = false;
+                std::cout << "Room " << roomNumber << " has been assigned\n";
+            } else {
+                std::cout << "Room " << roomNumber <<  " has already been assigned\n";
+            }
+        }
+
+        void roomRelease() {
+            if (!isAvailable) {
+                isAvailable = true;
+                std::cout << "Room " << roomNumber << " has been released\n";
+            } else {
+                std::cout << "Room " << roomNumber << " is already available\n";
+            }
+        }
+
+};
+
 int main() {
 
     int choice;
@@ -214,12 +251,15 @@ int main() {
             case 6:
                 d.searchDoctor();
                 break;
-            case 7:
+            case 7: 
+                p.editPatient();
+                break;
+            case 8:
                 std::cout << "Thank you for using the hospital manager";
                 break;
             default:
                 std::cout << "Please enter a valid choice";
                 break;
         }
-    } while (choice != 7);
+    } while (choice != 8);
 }
